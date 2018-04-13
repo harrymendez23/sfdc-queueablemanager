@@ -1,2 +1,2 @@
-# sfdc-queueablemanager
+# SFDC Queueable Manager
 Queueable orchestration in Salesforce.com platform.
