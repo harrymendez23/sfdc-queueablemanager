@@ -22,10 +22,10 @@ Another option is to add multiple jobs to the queue and then executing all of th
 SomeQueueable q1 = new SomeQueueable();
 q1.someValue = 1;
 QueueableManager.enqueueJob('SomeQueueableInstance1', q1);
-///Something else can here
-//Then at some point during transaction add another ojb
+///Something else can be done here
+//Then at some point during transaction add another job
 SomeQueueable q2 = new SomeQueueable();
-q2.someValue = 1;
+q2.someValue = 2;
 QueueableManager.enqueueJob('SomeQueueableInstance2', q2);
 ///Something more here
 //Then execute (system.enqueue) all jobs previously added to the queue
