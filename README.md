@@ -6,3 +6,12 @@ The Queueable interface in Salesforce's platform allows code execution in an asy
 
  
 Queueable Manager comes to the rescue; It tracks queueu availability on all contextes, making sure your code is always execute without issues. While queue space is available, your jobs will be enqueued as usual, then executed synchrously when resources are consumed. It also keeps track of which jobs have have already been executed during the transaction, helping avoid enqueuing the same job more than once.
+
+## Usage
+Use QueueableManager in place of system.enqueueJob. Following example enqueues your job in the system queue:
+
+```
+SomeQueueable q = new SomeQueueable();
+q.someValue = 1;
+QueueableManager.enqueueAndExecute('SomeQueueableInstance1', q);
+```
