@@ -15,3 +15,19 @@ SomeQueueable q = new SomeQueueable();
 q.someValue = 1;
 QueueableManager.enqueueAndExecute('SomeQueueableInstance1', q);
 ```
+
+Another option is to add multiple jobs to the queue and then executing all of them, for a better control of when your jobs are actually enqueued:
+
+```Java
+SomeQueueable q1 = new SomeQueueable();
+q1.someValue = 1;
+QueueableManager.enqueueJob('SomeQueueableInstance1', q1);
+///Something else can here
+//Then at some point during transaction add another ojb
+SomeQueueable q2 = new SomeQueueable();
+q2.someValue = 1;
+QueueableManager.enqueueJob('SomeQueueableInstance2', q2);
+///Something more here
+//Then execute (system.enqueue) all jobs previously added to the queue
+QueueableManager.executeAll();
+```
