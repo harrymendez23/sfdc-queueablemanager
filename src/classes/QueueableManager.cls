@@ -70,18 +70,13 @@ public class QueueableManager {
         if(!queue.isEmpty()) {
             for(QueueableJob q : queue.values()) {
                 //Enqueue or execute only if jobs has not been executed in current thread
-                //if(Limits.getQueueableJobs() < Limits.getLimitQueueableJobs() && !q.executed) {
                 if(IsQueueableAvailable && !q.executed) {
-                    system.debug('enqueuing job');
-                    //q.setExecuted();
-                	//system.enqueueJob(q.qJob);
+                	system.debug('enqueuing job');
                 	q.JobPath = JobPath.ENQUEUED;
                 	q.setExecuted(system.enqueueJob(q.qJob));
                 }//If there's no queueable capacity, execute job syncronously
-                //else if(Limits.getQueueableJobs() == Limits.getLimitQueueableJobs() && !q.executed) {
                 else if(!IsQueueableAvailable && !q.executed) {
                     system.debug('executing job : ' + q);
-                    //q.setExecuted();
                     q.qJob.execute(new QueueableManager.QueueableContext()); //execute syncronously
                     q.JobPath = JobPath.EXECUTED;
                     q.setExecuted(null);
@@ -92,24 +87,25 @@ public class QueueableManager {
             }
         }
     }
+    
     @TestVisible
     private enum JobPath { ENQUEUED, EXECUTED, SKIPPED }
     /**
-	* @author Harry Mendez <harry.mendez@verizon.com>
-	* @date 2018-03-01
-	*
-	* @group GenericHelpers
-	*
-	* @description 
-	* Purpose: Helper for tracking of Queueable instances execution.
-	*/
-	@TestVisible
+     * @author Harry Mendez <harry.mendez@verizon.com>
+     * @date 2018-03-01
+     *
+     * @group GenericHelpers
+     *
+     * @description 
+     * Purpose: Helper for tracking of Queueable instances execution.
+     */
+    @TestVisible
     private class QueueableJob {
     	@TestVisible
     	protected JobPath JobPath;
     	@TestVisible
-		protected Queueable qJob;
-		@TestVisible
+	protected Queueable qJob;
+	@TestVisible
         protected Boolean executed;
         @TestVisible
         protected ID jobId;
@@ -126,17 +122,17 @@ public class QueueableManager {
     }
     
     /**
-	* @author Harry Mendez <harry.mendez@verizon.com>
-	* @date 2018-03-01
-	*
-	* @group GenericHelpers
-	*
-	* @description 
-	* Purpose: Helper to provide System.QueueableContext behavior.
-	*/
-	@TestVisible
+    * @author Harry Mendez <harry.mendez@verizon.com>
+    * @date 2018-03-01
+    *
+    * @group GenericHelpers
+    *
+    * @description 
+    * Purpose: Helper to provide System.QueueableContext behavior.
+    */
+    @TestVisible
     private class QueueableContext implements System.QueueableContext {
-    	@TestVisible
-    	public ID getJobId() { return null; }
+        @TestVisible
+        public ID getJobId() { return null; }
     }
 }
