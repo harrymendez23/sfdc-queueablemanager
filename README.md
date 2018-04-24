@@ -10,7 +10,7 @@ Queueable Manager comes to the rescue; It tracks queueu availability on all cont
 ## Usage
 Use QueueableManager in place of system.enqueueJob. Following example enqueues your job in the system queue:
 
-```Apex
+```Java
 SomeQueueable q = new SomeQueueable();
 q.someValue = 1;
 QueueableManager.enqueueAndExecute('SomeQueueableInstance1', q);
